@@ -1,0 +1,1 @@
+mnist = data_reader('data', true)
