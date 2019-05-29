@@ -1,5 +1,5 @@
 classdef MnistData
-	properties
+    properties
         images;
         labels;
         size;
