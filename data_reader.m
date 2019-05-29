@@ -6,4 +6,3 @@ function [mnist] = data_reader(work_dir, one_hot)
     mnist = Mnist(train_images_filepath, train_labels_filepath, ...
         test_images_filepath, test_labels_filepath, one_hot);
 end
-

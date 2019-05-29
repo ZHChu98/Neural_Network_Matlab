@@ -12,4 +12,3 @@ classdef Mnist
         end
     end
 end
-

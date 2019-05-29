@@ -3,9 +3,8 @@ classdef MnistData
         images;
         labels;
         size;
-        pos;
     end
-   
+
 	methods
         function obj = MnistData(images_filepath, labels_filepath, one_hot)
             fp = fopen(images_filepath, 'r');
@@ -40,14 +39,21 @@ classdef MnistData
             fclose(fp);
             
             if one_hot == true
-                tmp = zeros(obj.size, 10);
+                tmp = zeros(10, obj.size);
                 for i = 1:obj.size
-                    tmp(i, obj.labels(i) + 1) = 1;
+                    tmp(obj.labels(i) + 1, i) = 1;
                 end
             end
             obj.labels = tmp;
-            
-            obj.pos = 0;
-        end 
+        end
+        
+        function [batch_images, batch_labels, pos] = next_batch(obj, pos, batch_size)
+            if pos + batch_size - 1 > obj.size
+                pos = 0;
+            end
+            batch_images = obj.images(:, :, pos:pos + batch_size - 1);
+            batch_labels = obj.labels(:, pos:pos + batch_size - 1);
+            pos =  pos + batch_size;
+        end
 	end
 end

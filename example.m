@@ -1,1 +1,1 @@
-mnist = data_reader('data', true)
+mnist = data_reader('data', true);
