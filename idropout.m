@@ -1,4 +1,4 @@
-classdef dropout 
+classdef idropout 
     properties
         keep_prob;
         dropout_mat;
