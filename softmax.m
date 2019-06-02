@@ -7,7 +7,7 @@ classdef softmax
         end
         
         function [delt_x] = backward(~, y, labels, weight_decay) % attention, y ~= y_pred
-            % we admit that we use cross entropy as loss function
+            % we admit that we use cross entropy as loss function with L2 regularization
             delt_x = (1 + weight_decay) * y;
             for i = 1:length(lables)
                 delt_x(i, labels(i)) = delt_x(i, labels(i)) - 1;

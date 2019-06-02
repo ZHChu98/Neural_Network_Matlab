@@ -3,7 +3,6 @@ classdef MnistData
         images;
         labels;
         size;
-        pos;
     end
 
     methods
@@ -38,21 +37,15 @@ classdef MnistData
             obj.labels = fread(fp, inf, 'unsigned char');
             
             fclose(fp);
-            
-            obj.pos = 1;
         end
         
-        function [batch_images, batch_labels] = next_batch(obj, batch_size)
-            if obj.pos+batch_size-1 > obj.size
-                obj.update_pos(1);
+        function [batch_images, batch_labels, new_pos] = next_batch(obj, batch_size, pos)
+            if pos+batch_size-1 > obj.size
+                pos = 1;
             end
-            batch_images = obj.images(:, :, 1, obj.pos:obj.pos+batch_size-1);
-            batch_labels = obj.labels(obj.pos:obj.pos+batch_size-1);
-            obj.updata_pos(obj.pos + batch_size);
-        end
-        
-        function obj = updata_pos(obj, new_pos)
-            obj.pos = new_pos;
+            batch_images = obj.images(:, :, 1, pos:pos+batch_size-1);
+            batch_labels = obj.labels(pos:pos+batch_size-1);
+            new_pos = pos + batch_size;
         end
 	end
 end
