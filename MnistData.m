@@ -3,9 +3,10 @@ classdef MnistData
         images;
         labels;
         size;
+        pos;
     end
 
-	methods
+    methods
         function obj = MnistData(images_filepath, labels_filepath, one_hot)
             fp = fopen(images_filepath, 'r');
             assert(fp ~= -1, ['Could not open ', images_filepath]);
@@ -18,8 +19,8 @@ classdef MnistData
             n_cols = fread(fp, 1, 'int32', 0, 'ieee-be');
             
             obj.images = fread(fp, inf, 'unsigned char');
-            obj.images = reshape(obj.images, [n_cols, n_rows, n_images]);
-            obj.images = permute(obj.images, [2, 1, 3]); % different with python
+            obj.images = reshape(obj.images, [n_cols, n_rows, 1, n_images]);
+            obj.images = permute(obj.images, [2, 1, 3, 4]); % different with python
             obj.images = obj.images / 256.0;
             
             fclose(fp);
@@ -45,15 +46,20 @@ classdef MnistData
                 end
             end
             obj.labels = tmp;
+            obj.pos = 1;
         end
         
-        function [batch_images, batch_labels, pos] = next_batch(obj, pos, batch_size)
-            if pos + batch_size - 1 > obj.size
-                pos = 0;
+        function [batch_images, batch_labels] = next_batch(obj, batch_size)
+            if obj.pos+batch_size-1 > obj.size
+                obj.update_pos(1);
             end
-            batch_images = obj.images(:, :, pos:pos + batch_size - 1);
-            batch_labels = obj.labels(:, pos:pos + batch_size - 1);
-            pos =  pos + batch_size;
+            batch_images = obj.images(:, :, 1, obj.pos:obj.pos+batch_size-1);
+            batch_labels = obj.labels(:, obj.pos:obj.pos+batch_size-1);
+            obj.updata_pos(obj.pos + batch_size);
+        end
+        
+        function obj = updata_pos(obj, new_pos)
+            obj.pos = new_pos;
         end
 	end
 end
