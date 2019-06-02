@@ -7,7 +7,7 @@ classdef MnistData
     end
 
     methods
-        function obj = MnistData(images_filepath, labels_filepath, one_hot)
+        function obj = MnistData(images_filepath, labels_filepath)
             fp = fopen(images_filepath, 'r');
             assert(fp ~= -1, ['Could not open ', images_filepath]);
             
@@ -39,13 +39,6 @@ classdef MnistData
             
             fclose(fp);
             
-            if one_hot == true
-                tmp = zeros(10, obj.size);
-                for i = 1:obj.size
-                    tmp(obj.labels(i) + 1, i) = 1;
-                end
-            end
-            obj.labels = tmp;
             obj.pos = 1;
         end
         
@@ -54,7 +47,7 @@ classdef MnistData
                 obj.update_pos(1);
             end
             batch_images = obj.images(:, :, 1, obj.pos:obj.pos+batch_size-1);
-            batch_labels = obj.labels(:, obj.pos:obj.pos+batch_size-1);
+            batch_labels = obj.labels(obj.pos:obj.pos+batch_size-1);
             obj.updata_pos(obj.pos + batch_size);
         end
         
