@@ -6,9 +6,11 @@ pos = 1;
 images = gpuArray(images);
 labels = gpuArray(labels);
 
+% introduction to each layer function
 % convolution layer
-conv1 = iconv2d(5, 5, 1, 6, 'tanh', 1, 'same');
-y = conv1.forward(images);
+conv_layer = iconv2d(5, 5, 1, 6, 'tanh', 1, 'same');
+[conv_layer, y] = conv_layer.forward(x);
+% [conv_layer, delta_x] = conv_layer.backward(delta_y, learning_rate);
 
 % flatten layer
 flatten_layer = iflatten();

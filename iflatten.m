@@ -9,8 +9,8 @@ classdef iflatten
             y = reshape(x, obj.dim_x(1)*obj.dim_x(2)*obj.dim_x(3), obj.dim_x(4))';
         end
         
-        function [x] = backward(obj, y)
-            x = reshape(y', obj.dim_x);
+        function [delta_x] = backward(obj, delta_y)
+            delta_x = reshape(delta_y', obj.dim_x);
         end    
     end
 end

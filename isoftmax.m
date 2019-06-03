@@ -1,4 +1,4 @@
-classdef softmax
+classdef isoftmax
     methods
         function [y] = forward(~, x)
             exp_x = exp(x);
