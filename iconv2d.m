@@ -48,25 +48,22 @@ classdef iconv2d
 
             if strcmp(obj.activation, 'tanh') == 1
                 tmp = zeros(o_h, o_w, obj.dim_W(4), dim_x(4));
-                s = obj.stride; % acceleration for gpu
-                d_W = obj.dim_W; % acceleration for gpu
-                W = obj.weight; % acceleration for gpu
-                b = obj.bias; % acceleration for gpu
+                s = obj.stride; 
+                d_W = obj.dim_W; 
                 for i = 1:dim_x(4)
-                    slice = x(:, :, :, i); % acceleration for gpu
                     for i_h = 1:o_h
                         for i_w = 1:o_w
                             if dim_x(3) == 1
                                 tmp(o_h, o_w, :, i) = sum(sum(...
-                                    slice((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :) .* W));
+                                    x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight));
                             else
                                 tmp(o_h, o_w, :, i) = sum(sum(sum(...
-                                    slice((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :) .* W)));
+                                    x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight)));
                             end
                         end
                     end
                 end
-                y = tanh(tmp + reshape(b, 1, 1, obj.dim_W(4)));
+                y = tanh(tmp + reshape(obj.bias, 1, 1, d_W(4)));
             else
                 error('activation must be ''tanh'' at this time');
             end
@@ -84,20 +81,18 @@ classdef iconv2d
             obj.bias = obj.bias - delta_b * learning_rate;
             [o_h, o_w, o_d, ~] = size(delta_y);
 
-            d_x_pad = [obj.dim_input(1)+obj.dim_pad(1)+obj.dim_pad(2), ...
-                obj.dim_input(2)+obj.dim_pad(3)+obj.dim_pad(4)]; % acceleration for gpu
-            W = obj.weight; % acceleration for gpu
-            s = obj.stride; % acceleration for gpu
-            d_W = obj.dim_W; % acceleration for gpu
-            delta_x_pad = zeros(d_x_pad(1), d_x_pad(2), obj.dim_input(3), obj.dim_input(4));
+            d_window = [obj.dim_input(1)+obj.dim_pad(1)+obj.dim_pad(2), ...
+                obj.dim_input(2)+obj.dim_pad(3)+obj.dim_pad(4)];
+            s = obj.stride;
+            d_W = obj.dim_W;
+            delta_x_pad = zeros(d_window(1), d_window(2), obj.dim_input(3), obj.dim_input(4));
             for i = 1:obj.dim_input(4)
-                delta_x_pad_i = zeros(d_x_pad(1), d_x_pad(2), d_W(3));
-                delta_u_i = delta_u(:, :, :, i);
+                delta_x_pad_i = zeros(d_window(1), d_window(2), obj.dim_input(3));
                 for i_h = 1:o_h
                     for i_w = 1:o_w
                         tmp = 0;
                         for i_d = 1:o_d
-                            tmp = tmp + delta_u_i(i_h, i_w, i_d) * W(:, :, :, o_d);
+                            tmp = tmp + delta_u(i_h, i_w, i_d, i) .* obj.weight(:, :, :, i_d);
                         end
                         delta_x_pad_i((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :) = ...
                             delta_x_pad_i((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :) + tmp;  
@@ -107,18 +102,15 @@ classdef iconv2d
             end
             delta_x = delta_x_pad(obj.dim_pad(1)+1:end-obj.dim_pad(2), obj.dim_pad(3)+1:end-obj.dim_pad(4), :, :);
             
-            x_pad = obj.input; % acceleration for gpu
             delta_W = zeros(d_W);
             for i = 1:obj.dim_input(4)
-                x_pad_i = x_pad(:, :, :, i); % acceleration for gpu
-                delta_u_i = delta_u(:, :, :, i);
                 delta_W_i = zeros(d_W);
                 for i_d = 1:o_d
-                    delta_W_d_i = zeros(d_W(1), d_W(2), d_W(3));
+                    delta_W_d_i = 0;
                     for i_h = 1:o_h
                         for i_w = 1:o_w
-                             delta_W_d_i = delta_W_d_i + delta_u_i(i_h, i_w, i_d) * ...
-                                 x_pad_i((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :)
+                             delta_W_d_i = delta_W_d_i + delta_u(i_h, i_w, i_d, i) * ...
+                                 obj.input((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i);
                         end
                     end
                     delta_W_i(:, :, :, i_d) = delta_W_d_i;
