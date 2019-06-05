@@ -1,6 +1,5 @@
 %% prework
 mnist = data_reader('data');
-p = parpool;
 
 %% parameters
 lr = 1e-4;
@@ -15,13 +14,11 @@ fully_layer1 = ifc(28*28*1, 128);
 fully_layer2 = ifc(128, 19);
 softmax_layer = isoftmax();
 
-test_images = gpuArray(mnist.test.images);
-test_labels = gpuArray(mnist.test.labels);
+test_images = mnist.test.images;
+test_labels = mnist.test.labels;
 
 for step = 1:train_step
     [train_images, train_labels] = mnist.train.next_batch(batch_size);
-    train_images = gpuArray(train_images);
-    train_labels = gpuArray(train_labels);
 
     [flatten_layer, y_flatten] = flatten_layer.forward(train_images);
     [fully_layer1, y_fc1] = fully_layer1.forward(y_flatten);
@@ -35,7 +32,7 @@ for step = 1:train_step
     if rem(step, n_display) == 0
         train_loss = iCrossEntropyLoss(y, train_labels, weight_decay);
         train_accuracy = iAccuracy(y, train_labels);
-        fprintf('<train step: %5d> train_accuracy: %4g, train_loss: %4g\n', ...
+        fprintf('<train step: %5d> train_accuracy: %.6f, train_loss: %.6f\n', ...
             step, train_accuracy, train_loss);
         [flatten_layer, y_flatten] = flatten_layer.forward(test_images);
         [fully_layer1, y_fc1] = fully_layer1.forward(y_flatten);
@@ -43,10 +40,7 @@ for step = 1:train_step
         y = softmax_layer.forward(y_fc2);
         test_loss = iCrossEntropyLoss(y, test_labels, weight_decay);
         test_accuracy = iAccuracy(y, test_labels);
-        fprintf('                    test_accuray: %4g, test_loss: %4g\n', ...
+        fprintf('                    test_accuray:  %.6fg, test_loss:  %.6f\n', ...
             test_accuracy, test_loss);
     end
 end
-
-%% ending
-delete(p);

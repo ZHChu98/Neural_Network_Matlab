@@ -7,8 +7,8 @@ classdef ifc
     
     methods
         function obj = ifc(n_input, n_output)
-            obj.weight = 0.1+0.01*gpuArray.randn(n_input, n_output);
-            obj.bias = 0.1+0.01*gpuArray.randn(1, n_output);
+            obj.weight = 0.1+0.01*randn(n_input, n_output);
+            obj.bias = 0.1+0.01*randn(1, n_output);
         end
         
         function [obj, y] = forward(obj, x)
