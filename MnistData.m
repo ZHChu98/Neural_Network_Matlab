@@ -19,7 +19,7 @@ classdef MnistData
             
             obj.images = fread(fp, inf, 'unsigned char');
             obj.images = reshape(obj.images, [n_cols, n_rows, 1, n_images]);
-            obj.images = permute(obj.images, [2, 1, 3, 4]); % different with python
+            obj.images = permute(obj.images, [2, 1, 3, 4]); % really different with python
             obj.images = obj.images / 256.0;
             
             fclose(fp);
@@ -35,17 +35,22 @@ classdef MnistData
             obj.size = n_images;
             
             obj.labels = fread(fp, inf, 'unsigned char');
+            obj.labels = obj.labels + 1; % origin labels start with 0
             
             fclose(fp);
         end
         
-        function [batch_images, batch_labels, new_pos] = next_batch(obj, batch_size, pos)
+        function [batch_images, batch_labels] = next_batch(obj, batch_size)
+            persistent pos;
+            if isempty(pos)
+                pos = 1;
+            end
             if pos+batch_size-1 > obj.size
                 pos = 1;
             end
             batch_images = obj.images(:, :, 1, pos:pos+batch_size-1);
             batch_labels = obj.labels(pos:pos+batch_size-1);
-            new_pos = pos + batch_size;
+            pos = pos + batch_size;
         end
 	end
 end

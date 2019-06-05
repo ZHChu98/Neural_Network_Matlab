@@ -5,7 +5,7 @@ classdef idropout
     end
     
     methods
-        function obj = dropout(p)
+        function obj = idropout(p)
             obj.keep_prob = 1 - p;
         end
         

@@ -1,19 +1,17 @@
 classdef ifc
     properties
         weight;
-        d_W;
         bias;
         input;
     end
     
     methods
         function obj = ifc(n_input, n_output)
-            obj.weight = gpuArray.randn(n_input, n_output);
-            obj.bias = gpuArray.randn(1, n_output);
-            obj.d_W = [n_input, n_output];
+            obj.weight = 0.1+0.01*gpuArray.randn(n_input, n_output);
+            obj.bias = 0.1+0.01*gpuArray.randn(1, n_output);
         end
         
-        function [y] = forward(obj, x)
+        function [obj, y] = forward(obj, x)
             obj.input = x;
             y = x * obj.weight + obj.bias;
         end
