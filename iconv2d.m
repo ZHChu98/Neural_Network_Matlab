@@ -1,4 +1,4 @@
-classdef iconv2d
+classdef iconv2d < handle
     properties
         weight;
         dim_W;
@@ -22,47 +22,49 @@ classdef iconv2d
             obj.padding = padding;
         end
         
-        function [obj, y] = forward(obj, x)
-            dim_x = size(x);
-            obj.dim_input = dim_x;
-
-            o_h = ceil(dim_x(1) / obj.stride);
-            o_w = ceil(dim_x(2) / obj.stride);
-
-            pad_h = max((o_h - 1) * obj.stride + obj.dim_W(1) - dim_x(1), 0);
-            pad_top = floor(pad_h / 2);
-            pad_bottom = pad_h - pad_top;
-            pad_w = max((o_w - 1) * obj.stride + obj.dim_W(2) - dim_x(2), 0);
-            pad_left = floor(pad_w / 2);
-            pad_right = pad_w - pad_left;
-            obj.dim_pad = [pad_top, pad_bottom, pad_left, pad_right];
+        function y = forward(obj, x)
+            obj.dim_input = size(x);
 
             if strcmp(obj.padding, 'same')
-                x = [zeros(dim_x(1), pad_left, dim_x(3), dim_x(4)), x, zeros(dim_x(1), pad_right, dim_x(3), dim_x(4))];
-                x = [zeros(pad_top, dim_x(2)+pad_w, dim_x(3), dim_x(4)); x; zeros(pad_bottom, dim_x(2)+pad_w, dim_x(3), dim_x(4))];
+                o_h = ceil(obj.dim_x(1) / obj.stride);
+                o_w = ceil(obj.dim_x(2) / obj.stride);
+
+                pad_h = max((o_h - 1) * obj.stride + obj.dim_W(1) - obj.dim_x(1), 0);
+                pad_top = floor(pad_h / 2);
+                pad_bottom = pad_h - pad_top;
+                pad_w = max((o_w - 1) * obj.stride + obj.dim_W(2) - obj.dim_x(2), 0);
+                pad_left = floor(pad_w / 2);
+                pad_right = pad_w - pad_left;
+                obj.dim_pad = [pad_top, pad_bottom, pad_left, pad_right];
+
+            
+                x = [zeros(obj.dim_x(1), pad_left, obj.dim_x(3), obj.dim_x(4)), ...
+                    x, zeros(obj.dim_x(1), pad_right, obj.dim_x(3), obj.dim_x(4))];
+                x = [zeros(pad_top, obj.dim_x(2)+pad_w, obj.dim_x(3), obj.dim_x(4)); ...
+                    x; zeros(pad_bottom, obj.dim_x(2)+pad_w, obj.dim_x(3), obj.dim_x(4))];
             else
                 error('padding must be ''same'' at this time');
             end
             
             obj.input = x;
-
-            if strcmp(obj.activation, 'tanh') == 1
-                tmp = zeros(o_h, o_w, obj.dim_W(4), dim_x(4));
-                s = obj.stride; 
-                d_W = obj.dim_W; 
-                for i = 1:dim_x(4)
-                    for i_h = 1:o_h
-                        for i_w = 1:o_w
-                            if dim_x(3) == 1
-                                tmp(o_h, o_w, :, i) = sum(sum(...
-                                    x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight));
-                            else
-                                tmp(o_h, o_w, :, i) = sum(sum(sum(...
-                                    x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight)));
-                            end
+            
+            tmp = zeros(o_h, o_w, obj.dim_W(4), dim_x(4));
+            s = obj.stride;
+            d_W = obj.dim_W;
+            for i = 1:dim_x(4)
+                for i_h = 1:o_h
+                    for i_w = 1:o_w
+                        if dim_x(3) == 1
+                            tmp(o_h, o_w, :, i) = sum(sum(...
+                                x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight));
+                        else
+                            tmp(o_h, o_w, :, i) = sum(sum(sum(...
+                                x((i_h-1)*s+1:(i_h-1)*s+d_W(1), (i_w-1)*s+1:(i_w-1)*s+d_W(2), :, i) .* obj.weight)));
                         end
                     end
                 end
+            end
+            if strcmp(obj.activation, 'tanh') == 1
                 y = tanh(tmp + reshape(obj.bias, 1, 1, d_W(4)));
             else
                 error('activation must be ''tanh'' at this time');
@@ -70,7 +72,7 @@ classdef iconv2d
             obj.output = y;
         end
         
-        function [obj, delta_x] = backward(obj, delta_y, learning_rate)
+        function delta_x = backward(obj, delta_y, learning_rate)
             if strcmp(obj.activation, 'tanh') == 1
                 delta_u = (1 - obj.output .^ 2) .* delta_y;
             else
