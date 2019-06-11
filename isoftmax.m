@@ -12,6 +12,7 @@ classdef isoftmax
             for i = 1:length(labels)
                 delta_x(i, labels(i)) = delta_x(i, labels(i)) - 1;
             end
+            % delta_x = delta_x / length(labels);
         end
     end
 end
