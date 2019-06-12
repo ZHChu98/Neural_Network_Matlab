@@ -4,8 +4,8 @@ mnist = data_reader('data');
 %% parameters
 lr = 1e-4;
 batch_size = 128;
-train_step = 6000;
-n_display = 500;
+train_step = 1000;
+n_display = 100;
 weight_decay = 0.01;
 
 %% model 2fc
@@ -42,17 +42,15 @@ for step = 1:train_step
     [~] = fully_layer1.backward(delta_y_drop, lr);
     
     if rem(step, n_display) == 0
-        train_loss = iCrossEntropyLoss(y, train_labels, weight_decay);
-        train_accuracy = iAccuracy(y, train_labels);
+        [train_accuracy, ~, train_loss] = iEvaluation(y, train_labels, weight_decay);
         fprintf('<train step: %5d> train_accuracy: %.6f, train_loss: %.6f\n', ...
             step, train_accuracy, train_loss);
         y_flatten = flatten_layer.forward(test_images);
         y_fc1 = fully_layer1.forward(y_flatten);
         y_fc2 = fully_layer2.forward(y_fc1);
         y = softmax_layer.forward(y_fc2);
-        test_loss = iCrossEntropyLoss(y, test_labels, weight_decay);
-        test_accuracy = iAccuracy(y, test_labels);
-        fprintf('                    test_accuracy:  %.6f, test_loss:  %.6f\n', ...
-            test_accuracy, test_loss);
+        [test_accuracy, test_f1, test_loss] = iEvaluation(y, test_labels, weight_decay);
+        fprintf('     f1: %2.2f      test_accuracy:  %.6f, test_loss:  %.6f\n', ...
+            test_f1*100, test_accuracy, test_loss);
     end
 end

@@ -33,10 +33,7 @@ softmax_layer = isoftmax();
 y = softmax_layer.forward(x);
 delta_x = softmax_layer.backward(y, labels, 0.01);
 
-%% cross entropy
-loss = iCrossEntropyLoss(y, labels, 0.01);
-
-%% accuracy
-accuracy = iAccuracy(y, labels);
+%% evaluation
+[accuracy, f1_score, loss] = iEvaluation(y, labels, 0.01);
 
 % evalin('base', 'who')
