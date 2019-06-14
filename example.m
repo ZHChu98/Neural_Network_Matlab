@@ -4,7 +4,7 @@ mnist = data_reader('data');
 
 %% introduction to each layer function
 %% convolution layer
-conv_layer = iconv2d(5, 5, 1, 6, 'tanh');
+conv_layer = iconv2d(5, 5, 1, 6, 'tanh', 'same');
 y = conv_layer.forward(x);
 delta_x = conv_layer.backward(delta_y, learning_rate);
 
