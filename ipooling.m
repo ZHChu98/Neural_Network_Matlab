@@ -1,15 +1,17 @@
 classdef ipooling < handle
     properties
-        dim_pool;
-        dim_x
-        pooling_mat;
+        dim_pool; % pooling size
+        dim_x % input size
+        pooling_mat; % pooling matrix required during backpropagation
     end
     
     methods
+        % initialization
         function obj = ipooling(p_1, p_2)
             obj.dim_pool = [p_1, p_2];
         end
         
+        % forward propagation
         function y = forward(obj, x)
             d_x = size(x);
             obj.dim_x = d_x;
@@ -37,6 +39,7 @@ classdef ipooling < handle
             obj.pooling_mat = pooling_mat_tmp;
         end
         
+        % backpropagation
         function delta_x = backward(obj, delta_y)
             d_p = obj.dim_pool;
             d_x = obj.dim_x;

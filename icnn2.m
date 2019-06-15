@@ -2,9 +2,9 @@
 mnist = data_reader('data');
 
 %% parameters
-lr = 2e-3;
+lr = 2e-2;
 batch_size = 100;
-train_step = 5000;
+train_step = 6000;
 n_display = 200;
 weight_decay = 0.01;
 
