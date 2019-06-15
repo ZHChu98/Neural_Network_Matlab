@@ -2,16 +2,16 @@
 mnist = data_reader('data');
 
 %% parameters
-lr = 2e-2;
+lr = 2e-4;
 batch_size = 100;
 train_step = 6000;
 n_display = 200;
 weight_decay = 0.01;
 
 %% model 2cnn+2fc
-conv_layer1 = iconv2d(5, 5, 1, 6, 'relu', 'same');
+conv_layer1 = iconv2d(5, 5, 1, 6, 'tanh', 'same');
 pooling_layer1 = ipooling(2, 2);
-conv_layer2 = iconv2d(5, 5, 1, 12, 'relu', 'same');
+conv_layer2 = iconv2d(5, 5, 1, 12, 'tanh', 'same');
 pooling_layer2 = ipooling(2, 2);
 flatten_layer = iflatten();
 fully_layer1 = ifc(7*7*12, 128);
