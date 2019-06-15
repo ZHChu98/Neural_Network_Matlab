@@ -109,7 +109,7 @@ Examples
 ```
 
 ### iEvaluation
-<b>FUNCTION</b> iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]
+<b>FUNCTION</b> iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]<br>
 
 Applies cross entropy function with L2 regularization to get average loss. Generates a confusion matrix to calculate accuracy and f1 macro score. This function does not have any change on model's parameters.<br>
 
@@ -152,7 +152,7 @@ Examples
 ```
 
 ### iflatten
-<b>CLASS</b> iflatten()
+<b>CLASS</b> iflatten()<br>
 Flatten the 4D array to 2D array with size [batch_size, n_features].<br>
 
 Member Function
@@ -171,7 +171,7 @@ Examples
 ```
 
 ### ipooling
-<b>CLASS</b> ipooling(kernel_height, kernel_width)
+<b>CLASS</b> ipooling(kernel_height, kernel_width)<br>
 Applies a 2D max pooling over an input signal composed of input planes.<br>
 
 In the simplest case, the input with size (H_in, W_in, C, N) correspond to the output with size (H_out, W_out, C, N), where N is a batch size, C denotes the number of channels, H is a height of planes in pixels, and W is width in pixels. The relation between input size and the output size is that<br>
@@ -202,7 +202,7 @@ Examples
 ```
 
 ### isoftmax
-<b>CLASS</b> isoftmax()
+<b>CLASS</b> isoftmax()<br>
 Applies the Softmax function to an 2D float array input rescaling them so that the elements of the output lie in the range [0, 1] and sum to 1.<br>
 
 Note:<br>
