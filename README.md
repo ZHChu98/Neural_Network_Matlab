@@ -10,11 +10,11 @@ icnn2
 Parameters are be changed effeciently by editing icnn.m or icnn2.m.<br>
 
 Generally, each main code is composed of following five parts.<br>
-Part 1. Reading datasets and setting hyperparameters.<br>
-Part 2. Designing model and initializing each layer.<br>
-Part 3. Feeding model in forward direction.<br>
-Part 4. Backpropagating in backward direction.<br>
-Part 5. Evaluating model's performance.<br>
+* Part 1. Reading datasets and setting hyperparameters.<br>
+* Part 2. Designing model and initializing each layer.<br>
+* Part 3. Feeding model in forward direction.<br>
+* Part 4. Backpropagating in backward direction.<br>
+* Part 5. Evaluating model's performance.<br>
 
 ### Part 1
 To read data with all datasets are stored in the folder 'data', you can run this command:<br>
@@ -56,12 +56,12 @@ This part is usually used when train step is a multiple times of n_display. Give
 ****
 ## Documentation
 ### iconv2d 
->CLASS iconv2d(kernel_height, kernel_width, in_channels, out_channels, activation, padding)<br>
+<b>CLASS</b> iconv2d(kernel_height, kernel_width, in_channels, out_channels, activation, padding)<br>
 Applies a 2D convolution and an activation function over an input signal composed of several input planes.<br>
 
 In the simplest case, the input with size (H_in, W_in, C_in, N) correspond to the output with size (H_out, W_out, C_out, N), where N is a batch size, C denotes a number of channels, H is a height of planes in pixels, and W is width in pixels.<br>
 
->>Parameters<br>
+Parameters<br>
 * kernel_height (int) - Height of the convolution kernel  
 * kernel_width (int) - Width of the convolution kernel  
 * in_channels (int) - Number of channels in the input image  
@@ -69,11 +69,11 @@ In the simplest case, the input with size (H_in, W_in, C_in, N) correspond to th
 * activation (string) - mode of activation function. Possible options for activation: 'sigmoid', 'tanh', 'relu'  
 * padding (string) - mode of zero-paddings. Possible options for padding: 'same', 'valid', where 'same' denotes input size and output size are the same and 'valid' denotes no zero-paddings  
 
->>Member Function<br>
+Member Function<br>
 * forward(input)->output
 * backward(delta_output, learning_rate)->delta_input
 
->>Examples
+Examples
 ```
 >> % constructor with kernel size = [5, 5]
 >> conv_layer = iconv2d(5, 5, 6, 12, 'tanh', 'same');
@@ -86,18 +86,18 @@ In the simplest case, the input with size (H_in, W_in, C_in, N) correspond to th
 ```
 
 ### idropout
->CLASS idropout(drop_prob)<br>
+<b>CLASS</b> idropout(drop_prob)<br>
 
 During training, randomly zeros some of the elements of the input with the probability drop_prob using samples from a Bernoulli distribution. Each channels will be zeroed out independently on every forward call. This has proven to be an effective techinique for regularization and preventing the coadaptation of neurons.<br>
 
->>Parameters
+Parameters
 * drop_prob (float) - probability of an element to be zeroed.
 
->>Member Function
+Member Function
 * forward(input)->output
 * backward(delta_output)->delta_input
 
->>Examples
+Examples
 ```
 >> drop_layer = idropout(0.5);
 >> % forward propagation
@@ -109,16 +109,16 @@ During training, randomly zeros some of the elements of the input with the proba
 ```
 
 ### iEvaluation
->FUNCTION iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]
+<b>FUNCTION</b> iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]
 
 Applies cross entropy function with L2 regularization to get average loss. Generates a confusion matrix to calculate accuracy and f1 macro score. This function does not has any change on model's parameters.<br>
 
->>Parameters
+Parameters
 * output (2D float array) - Output of the model with size [batch_size, n_class]
 * labels (int array) - Correct labels attached to the inputs.
 * weight_decay (float) - Parameter for L2 regularization.
 
->>Examples
+Examples
 ```
 >> % batch_size = 64, n_class = 6
 >> output = rand(64, 6);
@@ -128,18 +128,18 @@ Applies cross entropy function with L2 regularization to get average loss. Gener
 ```
 
 ### ifc
->CLASS ifc(in_features, out_features)<br>
+<b>CLASS</b> ifc(in_features, out_features)<br>
 Applies a linear transformation to the incoming data<br>
 
->>Parameters
+Parameters
 * in_features (int) - size of each input sample
 * out_features (int) - size of each output sample
 
->>Member Function
+Member Function
 * forward(input)->output
 * backward(delta_output, learning_rate)->delta_input
 
->>Examples
+Examples
 ```
 >> % constructor
 >> fc_layer = ifc(16, 10);
@@ -152,14 +152,14 @@ Applies a linear transformation to the incoming data<br>
 ```
 
 ### iflatten
->CLASS iflatten()
+<b>CLASS</b> iflatten()
 Flatten the 4D array to 2D array with size [batch_size, n_features].<br>
 
->>Member Function
+Member Function
 * forward(input)->output
 * backward(delta_output)->delta_input
 
->>Examples
+Examples
 ```
 >> flatten_layer = iflatten();
 >> % forward propagation
@@ -171,7 +171,7 @@ Flatten the 4D array to 2D array with size [batch_size, n_features].<br>
 ```
 
 ### ipooling
->CLASS ipooling(kernel_height, kernel_width)
+<b>CLASS</b> ipooling(kernel_height, kernel_width)
 Applies a 2D max pooling over an input signal composed of input planes.<br>
 
 In the simplest case, the input with size (H_in, W_in, C, N) correspond to the output with size (H_out, W_out, C, N), where N is a batch size, C denotes a number of channels, H is a height of planes in pixels, and W is width in pixels. The relation between input size and output size is that<br>
@@ -181,15 +181,15 @@ W_out = ceil(W_in / kernel_width)<br>
 Note (hyperparameters):<br>
 stride is set to [kernel_height, kernel_width] as default and no zero-paddings. Mode is set to max pooling as default.<br>
 
->>Parameters
+Parameters
 * kernel_height (int) - Height of the max pooling kernel
 * kernel_width (int) - Width of the max pooling kernel
 
->>Member Function
+Member Function
 * forward(input)->output
 * backward(delta_output)->delta_input
 
->>Examples
+Examples
 ```
 >> % constructor
 >> pooling_layer = ipooling(2, 2);
@@ -202,17 +202,17 @@ stride is set to [kernel_height, kernel_width] as default and no zero-paddings. 
 ```
 
 ### isoftmax
->CLASS isoftmax()
+<b>CLASS</b> isoftmax()
 Applies the Softmax function to an 2D float array input rescaling them so that the elements of the output lie in the range [0, 1] and sum to 1.<br>
 
 Note:<br>
 The backward function calculates errors including softmax layer and cross entropy layer with L2 regularization. So, softmax layer's backward function is the first function called in backpropagation.<br>
 
->>Member Function
+Member Function
 * forward(input)->output
 * backward(delta_output, labels, weight_decay)->delta_input
 
->>Examples
+Examples
 ```
 >> % constructor
 >> softmax_layer = isoftmax();
