@@ -18,9 +18,9 @@ Part 4. Backpropagating in backward direction.
 Part 5. Evaluating model's performance.
 
 
-◤▔▔▔◥
-‖ Part 1 ‖
-◣▁▁▁◢
+##########
+# Part 1 #
+##########
 To read data, you can run this command: 
 ★ mnist = data_reader('data');
 with all datasets are stored in the folder 'data'.
@@ -38,9 +38,9 @@ hyperparameters:
 • n_display (int) - period for evaluating performance on test datasets
 • weight_decay (float) - parameter for L2 regularization
 
-◤▔▔▔◥
-‖ Part 2 ‖
-◣▁▁▁◢
+┏--------┓
+| Part 2 |
+┗--------┛
 Initializing all layers which we need with parameters. Details about each 
 kind of neural network layer are available in the documentation below.
 
@@ -48,9 +48,9 @@ Note:
 Please pay attention to the size of each layer's input and output and check
 whether they correspond to the previous or following layers.
 
-◤▔▔▔◥
-‖ Part 3 ‖
-◣▁▁▁◢
+◆◆◆◆◆◆◆◆◆
+| Part 3 |
+◆◆◆◆◆◆◆◆◆
 Generally, for each train step, we read a batch of images and labels. Then,
 we feed the model in forward direction by calling forward function of each 
 layer class, which is explained in detail in the documentation below.
