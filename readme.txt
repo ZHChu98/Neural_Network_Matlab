@@ -1,3 +1,6 @@
+Please open this file with font 'Consolas' for better visual beauty
+Or you can visit my repository to read it: 
+https://github.com/ZHChu98/optimization_project/blob/master/readme.txt
 ---------------------------------------------------------------------------
 
                               ┏------------┓
@@ -18,9 +21,9 @@ Part 4. Backpropagating in backward direction.
 Part 5. Evaluating model's performance.
 
 
-##########
-# Part 1 #
-##########
+┏--------┓
+| Part 1 |
+┗--------┛
 To read data, you can run this command: 
 ★ mnist = data_reader('data');
 with all datasets are stored in the folder 'data'.
@@ -48,9 +51,9 @@ Note:
 Please pay attention to the size of each layer's input and output and check
 whether they correspond to the previous or following layers.
 
-◆◆◆◆◆◆◆◆◆
+┏--------┓
 | Part 3 |
-◆◆◆◆◆◆◆◆◆
+┗--------┛
 Generally, for each train step, we read a batch of images and labels. Then,
 we feed the model in forward direction by calling forward function of each 
 layer class, which is explained in detail in the documentation below.
@@ -59,9 +62,9 @@ Note:
 Please pay attention to the name of each layer's input and output as well 
 as layer itself. One useful trick is clear workspace each time you finish.
 
-◤▔▔▔◥
-‖ Part 4 ‖
-◣▁▁▁◢
+┏--------┓
+| Part 4 |
+┗--------┛
 Backpropagating should correspond to the model created by Part 3. Details 
 about backpropagation are exposed in the documentation below.
 
@@ -70,9 +73,9 @@ Please pay attention again to the name of each layer's input and output as
 well as layer itself, because it is sometimes hard to distinguish the 
 variable we want among dozens of variable names.
 
-◤▔▔▔◥
-‖ Part 5 ‖
-◣▁▁▁◢
+┏--------┓
+| Part 5 |
+┗--------┛
 This part is usually used when train step is a multiple times of n_display.
 Given the output of model and correct labels, iEvaluation function will 
 calculate automatically the accuracy, loss and F1 score.
@@ -84,9 +87,9 @@ calculate automatically the accuracy, loss and F1 score.
                               |DOCUMENTATION|
                               ┗-------------┛
 							  
-◤▔▔▔▔◥
-‖ iconv2d  ‖
-◣▁▁▁▁◢
+┏---------┓
+| iconv2d |
+┗---------┛
 ___________________________________________________________________________
 CLASS iconv2d(kernel_height, kernel_width, in_channels, out_channels, 
       activation, padding)
@@ -131,9 +134,9 @@ Examples
 >> delta_x = conv_layer.backward(y, 0.01);
 
 
-◤▔▔▔▔◥
-‖ idropout ‖
-◣▁▁▁▁◢
+┏----------┓
+| idropout |
+┗----------┛
 ___________________________________________________________________________
 CLASS idropout(drop_prob)
 
@@ -164,9 +167,9 @@ Examples
 >> delta_x = drop_layer.backward(delta_y);
 
 
-◤▔▔▔▔▔▔◥
-‖ iEvaluation  ‖
-◣▁▁▁▁▁▁◢
+┏-------------┓
+| iEvaluation |
+┗-------------┛
 ___________________________________________________________________________
 FUNCTION iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]
 
@@ -189,9 +192,9 @@ Examples
 >> [accuracy, f1, loss] = iEvaluation(output, labels, 0.01);
 
 
-◤▔▔◥
-‖ ifc  ‖
-◣▁▁◢
+┏-----┓
+| ifc |
+┗-----┛
 ___________________________________________________________________________
 CLASS ifc(in_features, out_features)
 
@@ -219,9 +222,9 @@ Examples
 >> delta_x = fc_layer.backward(delta_y, 0.01);
 
 
-◤▔▔▔▔◥
-‖ iflatten ‖
-◣▁▁▁▁◢
+┏----------┓
+| iflatten |
+┗----------┛
 ___________________________________________________________________________
 CLASS iflatten()
 
@@ -243,9 +246,9 @@ Examples
 >> delta_x = flatten_layer.backward(delta_y);
 
 
-◤▔▔▔▔◥
-‖ ipooling ‖
-◣▁▁▁▁◢
+┏----------┓
+| ipooling |
+┗----------┛
 ___________________________________________________________________________
 CLASS ipooling(kernel_height, kernel_width)
 
@@ -285,9 +288,9 @@ Examples
 >> delta_x = pooling_layer.backward(delta_y);
 
 
-◤▔▔▔▔◥
-‖ isoftmax ‖
-◣▁▁▁▁◢
+┏----------┓
+| isoftmax |
+┗----------┛
 ___________________________________________________________________________
 CLASS isoftmax()
 
