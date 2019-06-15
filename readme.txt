@@ -1,6 +1,6 @@
 Please open this file with font 'Consolas' for better visual beauty
 Or you can visit my repository to read it: 
-https://github.com/ZHChu98/optimization_project/blob/master/readme.txt
+https://github.com/ZHChu98/optimization_project/
 ---------------------------------------------------------------------------
 
                               ┏------------┓
@@ -8,10 +8,10 @@ https://github.com/ZHChu98/optimization_project/blob/master/readme.txt
                               ┗------------┛
 							  
 There are already two models available for test. 
-You can run this command in console to test:
+You can run this command in the console to test:
 ★ icnn
 ★ icnn2
-Parameters are be changed effeciently by editing icnn.m or icnn2.m.
+Parameters can be changed efficiently by editing icnn.m or icnn2.m.
 
 Generally, each main code is composed of following five parts.
 Part 1. Reading datasets and setting hyperparameters.
@@ -144,7 +144,7 @@ During training, randomly zeros some of the elements of the input with the
 probability drop_prob using samples from a Bernoulli distribution. Each 
 channels will be zeroed out independently on every forward call.
 
-This has proven to be an effective techinique for regularization and pre-
+This has proven to be an effective technique for regularization and pre-
 venting the coadaptation of neurons.
 
 __________
