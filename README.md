@@ -2,12 +2,12 @@
 2018-2019 2nd semester
 
 ## INTRODUCTION  
-There are already two models available for test. You can run this command in console to test:<br>
+There are already two models available for test. You can run this command in the console to test:<br>
 ```
 icnn  
 icnn2
 ```
-Parameters are be changed effeciently by editing icnn.m or icnn2.m.<br>
+Parameters are be changed efficiently by editing icnn.m or icnn2.m.<br>
 
 Generally, each main code is composed of following five parts.<br>
 * Part 1. Reading datasets and setting hyperparameters.<br>
@@ -38,7 +38,7 @@ Note:<br>
 Please pay attention to the size of each layer's input and output and check whether they correspond to the previous or following layers.<br>
 
 ### Part 3  
-Generally, for each train step, we read a batch of images and labels. Then, we feed the model in forward direction by calling forward function of each layer class, which is explained in detail in the documentation below.<br>
+Generally, for each training step, we read a batch of images and labels. Then, we feed the model in the forward direction by calling forward function of each layer class, which is explained in detail in the documentation below.<br>
 
 Note:<br>
 Please pay attention to the name of each layer's input and output as well as layer itself. One useful trick is clear workspace each time you finish training.<br>
@@ -50,7 +50,7 @@ Note:<br>
 Please pay attention again to the name of each layer's input and output as well as layer itself, because it is sometimes hard to distinguish the variable we want among dozens of variable names.<br>
 
 ### Part 5  
-This part is usually used when train step is a multiple times of n_display. Given the output of model and correct labels, iEvaluation function will calculate automatically the accuracy, loss and F1 score.<br>
+This part is usually used when the training step is multiple times of n_display. Given the output of the model and correct labels, iEvaluation function will calculate automatically the accuracy, loss and F1 score.<br>
 
 
 ****
@@ -59,7 +59,7 @@ This part is usually used when train step is a multiple times of n_display. Give
 <b>CLASS</b> iconv2d(kernel_height, kernel_width, in_channels, out_channels, activation, padding)<br>
 Applies a 2D convolution and an activation function over an input signal composed of several input planes.<br>
 
-In the simplest case, the input with size (H_in, W_in, C_in, N) correspond to the output with size (H_out, W_out, C_out, N), where N is a batch size, C denotes a number of channels, H is a height of planes in pixels, and W is width in pixels.<br>
+In the simplest case, the input with size (H_in, W_in, C_in, N) correspond to the output with size (H_out, W_out, C_out, N), where N is a batch size, C denotes the number of channels, H is a height of planes in pixels, and W is width in pixels.<br>
 
 Parameters<br>
 * kernel_height (int) - Height of the convolution kernel  
@@ -88,10 +88,10 @@ Examples
 ### idropout
 <b>CLASS</b> idropout(drop_prob)<br>
 
-During training, randomly zeros some of the elements of the input with the probability drop_prob using samples from a Bernoulli distribution. Each channels will be zeroed out independently on every forward call. This has proven to be an effective techinique for regularization and preventing the coadaptation of neurons.<br>
+During training, randomly zeros some of the elements of the input with the probability drop_prob using samples from a Bernoulli distribution. Each channel will be zeroed out independently on every forward call. This has proven to be an effective technique for regularization and preventing the coadaptation of neurons.<br>
 
 Parameters
-* drop_prob (float) - probability of an element to be zeroed.
+* drop_prob (float) - the probability of an element to be zeroed.
 
 Member Function
 * forward(input)->output
@@ -111,7 +111,7 @@ Examples
 ### iEvaluation
 <b>FUNCTION</b> iEvaluation(output, labels, weight_decay)->[accuracy, f1, loss]
 
-Applies cross entropy function with L2 regularization to get average loss. Generates a confusion matrix to calculate accuracy and f1 macro score. This function does not has any change on model's parameters.<br>
+Applies cross entropy function with L2 regularization to get average loss. Generates a confusion matrix to calculate accuracy and f1 macro score. This function does not have any change on model's parameters.<br>
 
 Parameters
 * output (2D float array) - Output of the model with size [batch_size, n_class]
@@ -174,7 +174,7 @@ Examples
 <b>CLASS</b> ipooling(kernel_height, kernel_width)
 Applies a 2D max pooling over an input signal composed of input planes.<br>
 
-In the simplest case, the input with size (H_in, W_in, C, N) correspond to the output with size (H_out, W_out, C, N), where N is a batch size, C denotes a number of channels, H is a height of planes in pixels, and W is width in pixels. The relation between input size and output size is that<br>
+In the simplest case, the input with size (H_in, W_in, C, N) correspond to the output with size (H_out, W_out, C, N), where N is a batch size, C denotes the number of channels, H is a height of planes in pixels, and W is width in pixels. The relation between input size and the output size is that<br>
 H_out = ceil(H_in / kernel_height)<br>
 W_out = ceil(W_in / kernel_width)<br>
 
