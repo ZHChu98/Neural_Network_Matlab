@@ -1,5 +1,6 @@
-# optimization_project
-2018-2019 2nd semester
+# NEURAL NETWORK IN MATLAB
+
+Implement the forward pass and backpropagation for each layer in neural network, such as linear layer, convolution layer, softmax layer, etc.
 
 ## INTRODUCTION  
 There are already two models available for test. You can run this command in the console to test:<br>
