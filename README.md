@@ -89,8 +89,8 @@ Parameters
 
 Methods
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output, learning_rate)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output, learning_rate) -> delta_input
 
 Examples
 
@@ -117,8 +117,8 @@ Parameters
 
 Methods
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output) -> delta_input
 
 Examples
 
@@ -134,7 +134,7 @@ Examples
 
 ### **iEvaluation**
 
-**FUNCTION** `iEvaluation` (output, labels, weight_decay)$\rightarrow$[accuracy, f1, loss]
+**FUNCTION** `iEvaluation` (output, labels, weight_decay) -> [accuracy, f1, loss]
 
 Applies Cross Entropy Function with L2 regularization to get average loss. Generates a confusion matrix to calculate accuracy and f1 macro score. This function does not have any change on model's weights.
 
@@ -167,8 +167,8 @@ Parameters
 
 Methods:
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output, learning_rate)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output, learning_rate) -> delta_input
 
 Examples
 
@@ -191,8 +191,8 @@ Flatten the 4D array to 2D array with size [batch_size, n_features].
 
 Methods
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output) -> delta_input
 
 Examples
 
@@ -228,8 +228,8 @@ Parameters
 
 Methods
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output) -> delta_input
 
 Examples
 
@@ -254,8 +254,8 @@ Note: the `backward` function calculates errors including softmax layer and Cros
 
 Methods
 
-- `forward` (input)$\rightarrow$output
-- `backward` (delta_output, labels, weight_decay)$\rightarrow$delta_input
+- `forward` (input) -> output
+- `backward` (delta_output, labels, weight_decay) -> delta_input
 
 Examples
 
