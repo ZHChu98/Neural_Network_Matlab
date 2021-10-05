@@ -187,7 +187,7 @@ Examples
 
 **CLASS** `iflatten()`
 
-Flatten the 4D array to 2D array with size [batch_size, n_features].
+Flattens the 4D array to 2D array with size [batch_size, n_features].
 
 Methods
 
@@ -214,9 +214,9 @@ Applies a 2D max pooling over an input signal composed of input planes.
 
 In the simplest case, the input with size (H_in, W_in, C, N) correspond to the output with size (H_out, W_out, C, N), where N is a batch size, C denotes the number of channels, H is a height of planes in pixels, and W is width in pixels. The relation between input size and the output size should be:
 
-$$H_{out} = ceil(H_{in} / kernel\_height)$$
+H_out = ceil(H_in / kernel_height)
 
-$$W_{out} = ceil(W_{in} / kernel\_width)$$
+W_out = ceil(W_in / kernel_width)
 
 Note (hyperparameters):
 stride is set to [kernel_height, kernel_width] as default and no zero-paddings. Mode is set to max pooling as default.
